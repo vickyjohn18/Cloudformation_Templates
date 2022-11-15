@@ -54,7 +54,7 @@ Resources:
   NatGateway:
     Type: 'AWS::EC2::NatGateway'
     Properties:
-      SubnetId: !Ref Privatesubnet
+      SubnetId: !Ref Publicsubnet
       AllocationId: !GetAtt NatPublicIP.AllocationId
       Tags:
         - Key: Name
@@ -139,12 +139,11 @@ Metadata:
         'y': 610
       z: 1
       embeds:
-        - c1aec0d0-a25c-4795-8aa2-4349e7eb18ef
-        - bd43354b-6e1b-4682-8daf-b611e909cbc8
-        - e0bdbfef-c6f2-4f35-afb8-9c6f8dafb529
         - 6ae5c074-0c69-45cc-b294-3fc6ae2dc3fe
+        - e0bdbfef-c6f2-4f35-afb8-9c6f8dafb529
         - 3c9190d5-eb45-4176-9839-70b3d6a9cc14
-        - 7f385390-5b80-4022-b1e2-7a55faa6757f
+        - bd43354b-6e1b-4682-8daf-b611e909cbc8
+        - c1aec0d0-a25c-4795-8aa2-4349e7eb18ef
     6ae5c074-0c69-45cc-b294-3fc6ae2dc3fe:
       size:
         width: 100
@@ -161,8 +160,8 @@ Metadata:
         width: 100
         height: 100
       position:
-        x: -2150
-        'y': 670
+        x: -2140
+        'y': 640
       z: 2
       parent: 212de9f1-ebe4-4ac2-86d4-d66cb934d5ae
       embeds:
@@ -172,8 +171,8 @@ Metadata:
         width: 60
         height: 60
       position:
-        x: -2130
-        'y': 690
+        x: -2120
+        'y': 670
       z: 3
       parent: e0bdbfef-c6f2-4f35-afb8-9c6f8dafb529
       embeds: []
@@ -181,13 +180,14 @@ Metadata:
         - 27c531dc-680b-4319-980f-535e455a0fad
       iscontainedinside:
         - e0bdbfef-c6f2-4f35-afb8-9c6f8dafb529
+        - e0bdbfef-c6f2-4f35-afb8-9c6f8dafb529
     3c9190d5-eb45-4176-9839-70b3d6a9cc14:
       size:
         width: 60
         height: 60
       position:
-        x: -1560
-        'y': 790
+        x: -1780
+        'y': 780
       z: 2
       parent: 212de9f1-ebe4-4ac2-86d4-d66cb934d5ae
       embeds: []
@@ -198,6 +198,7 @@ Metadata:
         id: 212de9f1-ebe4-4ac2-86d4-d66cb934d5ae
       target:
         id: 27c531dc-680b-4319-980f-535e455a0fad
+      z: 1
     bd43354b-6e1b-4682-8daf-b611e909cbc8:
       size:
         width: 150
@@ -213,10 +214,10 @@ Metadata:
         width: 60
         height: 60
       position:
-        x: -1440
-        'y': 720
-      z: 2
-      parent: 212de9f1-ebe4-4ac2-86d4-d66cb934d5ae
+        x: -1940
+        'y': 740
+      z: 3
+      parent: c1aec0d0-a25c-4795-8aa2-4349e7eb18ef
       embeds: []
     14b1478a-3291-415a-af01-ae4ca30b3958:
       size:
@@ -232,6 +233,7 @@ Metadata:
         - 7f385390-5b80-4022-b1e2-7a55faa6757f
       iscontainedinside:
         - 6ae5c074-0c69-45cc-b294-3fc6ae2dc3fe
+        - 6ae5c074-0c69-45cc-b294-3fc6ae2dc3fe
     c1aec0d0-a25c-4795-8aa2-4349e7eb18ef:
       size:
         width: 150
@@ -241,4 +243,5 @@ Metadata:
         'y': 670
       z: 2
       parent: 212de9f1-ebe4-4ac2-86d4-d66cb934d5ae
-      embeds: []
+      embeds:
+        - 7f385390-5b80-4022-b1e2-7a55faa6757f
