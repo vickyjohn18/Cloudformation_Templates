@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      CidrBlock: 10.0.0.0/16
+      Tags:
+       - Key: Name
+         Value: MyVPC
+   
+  Publicsubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: ap-south-1a
+      Tags:
+       - Key: Name
+         Value: PublicSubnet
+
+   
+  Privatesubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: ap-south-1b
+      MapPublicIpOnLaunch: false
+      Tags:
+       - Key: Name
+         Value: PrivateSubnet
+
+  InternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties: {}
+
+  VPCGatewayattachment:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+  NatGateway:
+    Type: 'AWS::EC2::NatGateway'
+    Properties:
+      SubnetId: !Ref Privatesubnet
+      AllocationId: !GetAtt NatPublicIP.AllocationId
+      Tags:
+       - Key: Name
+         Value: NATGateway
+  NatPublicIP:
+        Type: AWS::EC2::EIP
+        DependsOn: VPC
+        Properties:
+          Domain: vpc
+
+  PublicRT:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+       - Key: Name
+         Value: PublicRouteTable
+  PrivateRT:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+       - Key: Name
+         Value: PrivateRouteTable
+
+
+  Publicsubnetassociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties: 
+     RouteTableId: !Ref PublicRT
+     SubnetId: !Ref Publicsubnet
+  Privatesubnetassociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+     RouteTableId: !Ref PrivateRT
+     SubnetId: !Ref Privatesubnet
+
+  PublicRoute:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref PublicRT
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+      
+  PrivateRoute:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref PrivateRT
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+      
